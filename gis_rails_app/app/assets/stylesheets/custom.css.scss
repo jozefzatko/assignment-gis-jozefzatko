@@ -9,16 +9,21 @@ html, body {
 .content {
 
 	width:100%;
-	height:100%;
+	height:96%;
 }
 
 
-.menu {
+.left-panel {
 
 	float:left;
 	width:20%;
 	height:100%;
-	background:#33ffff;
+}
+
+.menu {
+	background:#40a4df;
+	opacity: 0.25;
+	height:100%;
 }
 
 
@@ -32,7 +37,46 @@ html, body {
 #map {
 
 	position:absolute;
-	width:80%;	
+	width:80%;
+	height:96%;	
 	top:0;
 	bottom:0;
+}
+
+.footer {
+	width:100%;
+	height: 4%;
+	background:#40a4df;
+	text-align:center;
+	color:#FFFFFF;
+	float:left;
+}
+
+
+.footer-nav-area {
+
+	background:#40a4df;
+}
+
+ul.footer-nav {
+
+	padding:8px 40px 0px 40px;
+	list-style:none;
+	float:center
+}
+
+ul.footer-nav li {
+
+	padding:0px 30px 0px 30px;
+	float:left;
+	display:block;
+}
+
+ul.footer-nav li a {
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:16px;
+	text-decoration:none;
+	color:#FFFFFF;
+	text-align:center;
+	font-weight:normal;
 }
