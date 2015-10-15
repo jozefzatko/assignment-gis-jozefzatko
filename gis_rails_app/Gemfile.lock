@@ -62,6 +62,11 @@ GEM
     geocoder (1.2.11)
     globalid (0.3.6)
       activesupport (>= 4.1.0)
+    gon (6.0.1)
+      actionpack (>= 3.0)
+      json
+      multi_json
+      request_store (>= 1.0)
     i18n (0.7.0)
     jbuilder (2.3.2)
       activesupport (>= 3.0.0, < 5)
@@ -71,7 +76,7 @@ GEM
       railties (>= 4.2.0)
       thor (>= 0.14, < 2.0)
     json (1.8.3)
-    libv8 (3.16.14.11)
+    libv8 (3.16.14.13)
     loofah (2.0.3)
       nokogiri (>= 1.5.9)
     mail (2.6.3)
@@ -113,6 +118,7 @@ GEM
     rake (10.4.2)
     rdoc (4.2.0)
     ref (2.0.0)
+    request_store (1.2.0)
     rgeo (0.4.0)
     rgeo-activerecord (4.0.0)
       activerecord (~> 4.2)
@@ -161,6 +167,7 @@ DEPENDENCIES
   coffee-rails
   execjs
   geocoder
+  gon
   jbuilder
   jquery-rails
   pg
