@@ -7,8 +7,8 @@ Build a map-based application, which lets the user see geo-based data on a map a
 3. The user-facing application (web, android, ios, your choice..) which calls the API and lets the user see and navigate in the map and shows the geodata. You can (and should) use existing components, such as the Mapbox SDK, or [Leaflet](http://leafletjs.com/).
 
 
-# My project (not completely specified yet)
-
+# My project
+- Web application build with Ruby on Rails
 
 ## Application description
 - Showing lakes and rivers for selected country with detailed information about them
@@ -16,16 +16,16 @@ Build a map-based application, which lets the user see geo-based data on a map a
 - Showing country and ecoregion for selected river or lake
 
 ## Data source
-[Borders of World Countries](https://github.com/johan/world.geo.json/tree/master/countries)
-[Global Lakes and Wetlands Database - Level 1](https://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-large-lake-polygons-level-1)
-[Global Lakes and Wetlands Database: Small Lake Polygons- Level 2](http://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-small-lake-polygons-level-2)
-[Freshwater Ecoregions of the World](http://www.feow.org/)
+- [Borders of World Countries](https://github.com/johan/world.geo.json/tree/master/countries)
+- [Global Lakes and Wetlands Database - Level 1](https://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-large-lake-polygons-level-1)
+- [Global Lakes and Wetlands Database: Small Lake Polygons- Level 2](http://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-small-lake-polygons-level-2)
+- [Freshwater Ecoregions of the World](http://www.feow.org/)
 
 ## Technologies used
-[Ruby on Rails](http://rubyonrails.org/) (v4.2.4)<br />
-[Mapbox](http://mapbox.com) (v2.2.2)<br />
-[PostgreSQL](http://www.postgresql.org/) (v9.3)<br />
-[PostGIS](http://postgis.net/) (v2.2)<br />
+- [Ruby on Rails](http://rubyonrails.org/) (v4.2.4)
+- [Mapbox](http://mapbox.com) (v2.2.2)
+- [PostgreSQL](http://www.postgresql.org/) (v9.3)
+- [PostGIS](http://postgis.net/) (v2.2)
 
 ## Source code
 [https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/gis_rails_app](https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/gis_rails_app)
