@@ -6,7 +6,6 @@ html, body {
 }
 
 h1 {
-	margin: 0px;
 	font-family:Arial, Helvetica, sans-serif;
 	font-size:40px;
 	font-weight: bold;
@@ -34,7 +33,7 @@ h2 {
 .left-panel {
 
 	float:left;
-	width:20%;
+	width:25%;
 	height:100%;
 }
 
@@ -48,14 +47,14 @@ h2 {
 .map {
 
 	float:left;
-	width:80%
+	width:75%
 }
 
 
 #map {
 
 	position:absolute;
-	width:80%;
+	width:75%;
 	height:96%;	
 	top:4%;
 	bottom:0;
@@ -65,11 +64,11 @@ h2 {
 .about {
 
 	float:left;
-	width:60%;
+	width:50%;
 	height:100%;
 
 	a,p {
-		font-size:18px;
+		font-size:16px;
 	}
 }
 
@@ -134,5 +133,14 @@ ul.header-nav li a {
 	color:#FFFFFF;
 	text-align:right;
 	font-weight:normal;
+}
+
+ul.bullets {
+ 
+    padding:8px 40px 0px 40px;
+    
+    a, p, li {
+        font-size:16px;
+    }
 }
 

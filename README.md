@@ -18,7 +18,7 @@ Build a map-based application, which lets the user see geo-based data on a map a
 ## Data source
 - [Borders of World Countries](https://github.com/johan/world.geo.json/tree/master/countries)
 - [Global Lakes and Wetlands Database - Level 1](https://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-large-lake-polygons-level-1)
-- [Global Lakes and Wetlands Database: Small Lake Polygons- Level 2](http://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-small-lake-polygons-level-2)
+- [Global Lakes and Wetlands Database: Small Lake Polygons - Level 2](http://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-small-lake-polygons-level-2)
 - [Freshwater Ecoregions of the World](http://www.feow.org/)
 
 ## Technologies used
