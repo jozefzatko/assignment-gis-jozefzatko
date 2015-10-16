@@ -11,10 +11,15 @@ Build a map-based application, which lets the user see geo-based data on a map a
 
 
 ## Application description
-- Showing lakes for selected country with information about them	
+- Showing lakes and rivers for selected country with detailed information about them
+- Showing lakes and rivers for selected ecoregion
+- Showing country and ecoregion for selected river or lake
 
 ## Data source
-[Borders of world countries](https://github.com/johan/world.geo.json/tree/master/countries)
+[Borders of World Countries](https://github.com/johan/world.geo.json/tree/master/countries)
+[Global Lakes and Wetlands Database - Level 1](https://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-large-lake-polygons-level-1)
+[Global Lakes and Wetlands Database: Small Lake Polygons- Level 2](http://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-small-lake-polygons-level-2)
+[Freshwater Ecoregions of the World](http://www.feow.org/)
 
 ## Technologies used
 [Ruby on Rails](http://rubyonrails.org/) (v4.2.4)<br />
