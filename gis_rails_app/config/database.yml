@@ -3,7 +3,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: maps_demo
+  database: gis_project
   pool: 5
   username: jozef
   password: password
@@ -13,7 +13,7 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: maps_demo
+  database: gis_project
   pool: 5
   username: jozef
   password: password
@@ -23,7 +23,7 @@ test:
 production:
   adapter: postgresql
   encoding: unicode
-  database: maps_demo
+  database: gis_project
   pool: 20
   username: jozef
   password: password
