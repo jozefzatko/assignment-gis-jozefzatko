@@ -11,12 +11,12 @@ Build a map-based application, which lets the user see geo-based data on a map a
 - Web application build with Ruby on Rails
 
 ## Application description
-- Showing lakes and rivers for selected country with detailed information about them
-- Showing lakes and rivers for selected ecoregion
-- Showing country and ecoregion for selected river or lake
+- Showing lakes, rivers and reservoirs for selected country with detailed information about them
+- Showing lakes, rivers and reservoirs for selected ecoregion
+- Showing country and ecoregion for selected river, lake or reservoir
 
 ## Data source
-- [Borders of World Countries](https://github.com/johan/world.geo.json/tree/master/countries)
+- [Borders of World Countries](http://www.naturalearthdata.com/downloads/50m-cultural-vectors/50m-admin-0-countries-2/)
 - [Global Lakes and Wetlands Database - Level 1](https://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-large-lake-polygons-level-1)
 - [Global Lakes and Wetlands Database: Small Lake Polygons - Level 2](http://www.worldwildlife.org/publications/global-lakes-and-wetlands-database-small-lake-polygons-level-2)
 - [Freshwater Ecoregions of the World](http://www.feow.org/)
@@ -26,6 +26,8 @@ Build a map-based application, which lets the user see geo-based data on a map a
 - [Mapbox](http://mapbox.com) (v2.2.2)
 - [PostgreSQL](http://www.postgresql.org/) (v9.3)
 - [PostGIS](http://postgis.net/) (v2.2)
+- [ogr2ogr](http://www.gdal.org/ogr2ogr.html)
+- [mapshaper](http://mapshaper.org/)
 
 ## Source code
 [https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/gis_rails_app](https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/gis_rails_app)
