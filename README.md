@@ -8,7 +8,7 @@ Build a map-based application, which lets the user see geo-based data on a map a
 
 
 # My project
-- Web application build with Ruby on Rails
+- Map-based web application built with Ruby on Rails able to show freshwater geodata
 
 ## Application description
 - Showing lakes, rivers and reservoirs for selected country with detailed information about them
@@ -29,5 +29,8 @@ Build a map-based application, which lets the user see geo-based data on a map a
 - [ogr2ogr](http://www.gdal.org/ogr2ogr.html)
 - [mapshaper](http://mapshaper.org/)
 
-## Source code
-[https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/gis_rails_app](https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/gis_rails_app)
+## Application source code
+- [https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/gis_rails_app](https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/gis_rails_app)
+
+## Used data (geojson format)
+- [https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/data](https://github.com/jozefzatko/assignment-gis-jozefzatko/tree/master/data)
