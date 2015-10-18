@@ -1,19 +1,14 @@
 == README
 
+Author: Jozef Zatko, FIIT STU
+
+Built on Linux Mint 17.2
+
+Created for non-commercial use
+
 Requirements:
 
 * Ruby v2.2.1
 * Rails v4.2.4
 * Postgres v9.3
-* ...and a lot of coffee
-
-
-How to run:
-
-* bundle update
-* bundle install
-* rake db:create
-* rake db:seed
-* rake db:migrate
-* rails s
-* open http://localhost:3000/ via web browser 
+* Postgis v2.2
