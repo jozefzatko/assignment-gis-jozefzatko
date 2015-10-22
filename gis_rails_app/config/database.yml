@@ -1,30 +1,31 @@
-# Using PostgreSQL 9.3
+# PostgreSQL 9.3 and Postgis 2.2
 
 development:
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
   database: gis_project
   pool: 5
   username: jozef
   password: password
   template: template_postgis
-
+  schema_search_path: public
 
 test:
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
   database: gis_project
   pool: 5
   username: jozef
   password: password
   template: template_postgis
-
+  schema_search_path: public
 
 production:
-  adapter: postgresql
+  adapter: postgis
   encoding: unicode
   database: gis_project
   pool: 20
   username: jozef
   password: password
   template: template_postgis
+  schema_search_path: public
