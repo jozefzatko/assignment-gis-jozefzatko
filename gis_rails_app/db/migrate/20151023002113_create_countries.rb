@@ -8,7 +8,7 @@ class CreateCountries < ActiveRecord::Migration
       t.text     "sovereignt",        limit: 50
       t.text     "continent",         limit: 30
       t.text     "region",            limit: 50
-      t.integer  "population",        limit: 2000000000
+      t.integer  "population"
       t.geometry "coordinates",       limit: {:srid=>4326, :type=>"geometry"}
       t.text     "json_coordinates"
       
