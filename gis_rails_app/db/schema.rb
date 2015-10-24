@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151023002113) do
+ActiveRecord::Schema.define(version: 20151024005223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -32,5 +32,20 @@ ActiveRecord::Schema.define(version: 20151023002113) do
   end
 
   add_index "countries", ["coordinates"], name: "index_countries_on_coordinates", using: :gist
+
+  create_table "freshwater_ecoregions", force: :cascade do |t|
+    t.integer  "feow_id"
+    t.text     "name"
+    t.text     "realm"
+    t.text     "major_habitat_type"
+    t.float    "area_km2"
+    t.text     "web_page"
+    t.geometry "coordinates",        limit: {:srid=>4326, :type=>"geometry"}
+    t.text     "json_coordinates"
+    t.datetime "created_at",                                                  null: false
+    t.datetime "updated_at",                                                  null: false
+  end
+
+  add_index "freshwater_ecoregions", ["coordinates"], name: "index_freshwater_ecoregions_on_coordinates", using: :gist
 
 end
