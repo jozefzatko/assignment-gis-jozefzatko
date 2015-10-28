@@ -92,6 +92,7 @@ data_hash['features'].each do |freshwtr|
 		
 		feow_id: 							freshwtr["properties"]["FEOW_ID"],
 		name: 								freshwtr["properties"]["LAKE_NAME"],
+		freshwater_type:			freshwtr["properties"]["TYPE"],
 		area_km2:							freshwtr["properties"]["AREA_SKM"],
 		perimeter_km:					freshwtr["properties"]["PERIM_KM"],
 		longitude:						freshwtr["properties"]["LONG_DEG"],
@@ -118,6 +119,7 @@ data_hash['features'].each do |freshwtr|
 		
 		feow_id: 							freshwtr["properties"]["FEOW_ID"],
 		name: 								freshwtr["properties"]["LAKE_NAME"],
+		freshwater_type:			freshwtr["properties"]["TYPE"],
 		area_km2:							freshwtr["properties"]["AREA_SKM"],
 		perimeter_km:					freshwtr["properties"]["PERIM_KM"],
 		longitude:						freshwtr["properties"]["LONG_DEG"],
@@ -136,31 +138,33 @@ end
 
 ### Freshwater no. 3 #########################################################################################
 
-puts "Be patient..."
+data_hash = JSON.parse(File.read(freshwater_file_3))
 
-#data_hash = JSON.parse(File.read(freshwater_file_3))
+data_hash['features'].each do |freshwtr|
 
-#data_hash['features'].each do |freshwtr|
+	if freshwtr["properties"]["TYPE"] == "Lake" or freshwtr["properties"]["TYPE"] == "Reservoir"
+	else
 
-#	Freshwater.create(
-		
-#		feow_id: 							freshwtr["properties"]["FEOW_ID"],
-#		name: 								freshwtr["properties"]["LAKE_NAME"],
-#		area_km2:							freshwtr["properties"]["AREA_SKM"],
-#		perimeter_km:					freshwtr["properties"]["PERIM_KM"],
-#		longitude:						freshwtr["properties"]["LONG_DEG"],
-#		latitude:							freshwtr["properties"]["LAT_DEG"],
-#		elevation:						freshwtr["properties"]["ELEV_M"],
-#		country:							freshwtr["properties"]["COUNTRY"],
-#		secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
-#		river:								freshwtr["properties"]["RIVER"],
-#		near_city:						freshwtr["properties"]["NEAR_CITY"],
-		
-#		json_coordinates:			freshwtr["geometry"].to_s
-		
-#		) unless freshwtr["geometry"].nil?
-	
-#end
+		Freshwater.create(
+
+				feow_id: 							freshwtr["properties"]["FEOW_ID"],
+				name: 								freshwtr["properties"]["LAKE_NAME"],
+				freshwater_type:			freshwtr["properties"]["TYPE"],
+				area_km2:							freshwtr["properties"]["AREA_SKM"],
+				perimeter_km:					freshwtr["properties"]["PERIM_KM"],
+				longitude:						freshwtr["properties"]["LONG_DEG"],
+				latitude:							freshwtr["properties"]["LAT_DEG"],
+				elevation:						freshwtr["properties"]["ELEV_M"],
+				country:							freshwtr["properties"]["COUNTRY"],
+				secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
+				river:								freshwtr["properties"]["RIVER"],
+				near_city:						freshwtr["properties"]["NEAR_CITY"],
+
+				json_coordinates:			freshwtr["geometry"].to_s
+
+				)
+	end
+end
 
 connection.execute(" UPDATE freshwaters SET json_coordinates = replace(json_coordinates, '=>', ':'); ")
 connection.execute(" UPDATE freshwaters SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326); ")

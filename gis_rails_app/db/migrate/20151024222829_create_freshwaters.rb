@@ -4,6 +4,7 @@ class CreateFreshwaters < ActiveRecord::Migration
 
       t.integer   "feow_id"
       t.text      "name",                 limit: 50
+      t.text      "freshwater_type",      limit: 30
       t.float     "area_km2"
       t.float     "perimeter_km"
       t.float     "longitude"

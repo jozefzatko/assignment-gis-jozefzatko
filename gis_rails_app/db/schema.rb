@@ -51,6 +51,7 @@ ActiveRecord::Schema.define(version: 20151024222829) do
   create_table "freshwaters", force: :cascade do |t|
     t.integer  "feow_id"
     t.text     "name"
+    t.text     "freshwater_type"
     t.float    "area_km2"
     t.float    "perimeter_km"
     t.float    "longitude"
