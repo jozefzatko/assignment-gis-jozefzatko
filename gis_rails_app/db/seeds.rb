@@ -144,6 +144,8 @@ data_hash['features'].each do |freshwtr|
 
 	if freshwtr["properties"]["TYPE"] == "Lake" or freshwtr["properties"]["TYPE"] == "Reservoir"
 	else
+		
+		
 
 		Freshwater.create(
 
