@@ -17,8 +17,18 @@ class FreshwatersController < ApplicationController
     
   end
   
+  
   def show
-    @freshwater = Freshwater.find(params[:id])
+    
+    @freshwater = Freshwater.find(request.original_url.split('/')[4])
+    
+    @geojson_data = @freshwater.get_geojson
+  
+    gon.geo_data = @geojson_data
+    gon.longitude = @freshwater.longitude
+    gon.latitude = @freshwater.latitude
+    gon.zoom_level = @freshwater.get_zoom_level
+    
   end
 
 end
