@@ -40,9 +40,14 @@ h2 {
 	height:100%;
 }
 
-.menu {
-	background:#fff;
-	height:100%;
+.search {
+	background:#eee;
+	height:25%;
+}
+
+.results {
+	background:#ddd;
+	height:75%;
 }
 
 
@@ -57,7 +62,7 @@ h2 {
 
 	position:absolute;
 	width:75%;
-	height:96%;	
+	height:100%;	
 	top:4%;
 	bottom:0;
 }

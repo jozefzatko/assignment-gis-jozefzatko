@@ -2,19 +2,12 @@
 	
 	<div class="left-panel">
 				
-		<div class="menu">
+		<div class="search">
+			<p>Search panel in progress...</p>
+		</div>
 		
-			<h2><%= @freshwater.name %></h2>
-			
-			<p>	<b>Type: 		</b>	<%= @freshwater.get_type %>			</p>
-			<p>	<b>Country: 	</b>	<%= @freshwater.get_country %>		</p>
-			<p>	<b>Area: 		</b>	<%= @freshwater.get_area %>			</p>
-			<p>	<b>Perimeter: 	</b>	<%= @freshwater.get_perimeter %>	</p>
-			<p>	<b>Elevation: 	</b>	<%= @freshwater.get_elevation %>	</p>
-			<p>	<b>Countries: 	</b>	<%= @freshwater.get_countries %>	</p>
-			<p>	<b>Near city:	</b>	<%= @freshwater.get_city %>			</p>
-			<p>	<b>River: 		</b>	<%= @freshwater.get_river %>		</p>
-		
+		<div class="results">
+			<p>Search results panel also in progress...</p>
 		</div>
 
 	</div>
@@ -27,6 +20,7 @@
 			L.mapbox.accessToken = 'pk.eyJ1IjoiZG9kbzcwNzEiLCJhIjoiY2lmZWoybWg1MDBpbnRha241dmQ0Mm80dyJ9.gaI7v5oYAZOGIpTAhvLreg';
 			L.mapbox.map('map', 'dodo7071.cifej2m7o00iuuelyy9gipvq7').setView([gon.latitude, gon.longitude], gon.zoom_level).featureLayer.setGeoJSON(gon.geo_data);
 		</script>
+		
 	</div>
-
+	
 </div>

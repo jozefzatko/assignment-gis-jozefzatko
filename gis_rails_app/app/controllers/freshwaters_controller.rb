@@ -9,7 +9,7 @@ class FreshwatersController < ApplicationController
 		
 		@freshwaters.each do |freshwater|
 			
-      @geojson_data << freshwater.get_geojson
+      @geojson_data << freshwater.get_mapbox_point_geojson("small")
 			
 		end
 
@@ -22,7 +22,19 @@ class FreshwatersController < ApplicationController
     
     @freshwater = Freshwater.find(request.original_url.split('/')[4])
     
-    @geojson_data = @freshwater.get_geojson
+    @geojson_data = Array.new
+    
+    @freshwaters = Freshwater.where("freshwater_type = ?","River").limit(200)
+    @freshwaters += Freshwater.where("id < ?",200)
+		
+		@freshwaters.each do |freshwater|
+			
+      if freshwater.id == @freshwater.id
+        @geojson_data << freshwater.get_mapbox_point_geojson("large")
+      else
+        @geojson_data << freshwater.get_mapbox_point_geojson("small")
+      end
+		end
   
     gon.geo_data = @geojson_data
     gon.longitude = @freshwater.longitude
