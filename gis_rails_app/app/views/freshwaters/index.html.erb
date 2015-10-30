@@ -1,25 +1,10 @@
 <div class="content">
-	
+
 	<div class="left-panel">
-				
-		<div class="search">
-			<p>Search panel in progress...</p>
-		</div>
-		
-		<div class="results">
-			<p>Search results panel also in progress...</p>
-		</div>
-
+		<%= render 'to_render/left_panel/search_freshwaters' %>
+		<%= render 'to_render/left_panel/results_of_freshwaters' %>
 	</div>
-				
-	<div class="map">
-
-		<div id='map'></div>
-
-		<script>
-			L.mapbox.accessToken = 'pk.eyJ1IjoiZG9kbzcwNzEiLCJhIjoiY2lmZWoybWg1MDBpbnRha241dmQ0Mm80dyJ9.gaI7v5oYAZOGIpTAhvLreg';
-			L.mapbox.map('map', 'dodo7071.cifej2m7o00iuuelyy9gipvq7').setView([52.0, 30.0], 4).featureLayer.setGeoJSON(gon.geo_data);
-		</script>
-	</div>
-
+	
+	<%= render 'to_render/map/map' %>
+	
 </div>

@@ -14,6 +14,9 @@ class FreshwatersController < ApplicationController
 		end
 
 		gon.geo_data = @geojson_data
+    gon.longitude = 41.85
+    gon.latitude = 50.36
+    gon.zoom_level = 6
     
   end
   
