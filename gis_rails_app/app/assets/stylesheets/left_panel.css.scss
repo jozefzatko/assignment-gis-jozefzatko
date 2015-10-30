@@ -6,11 +6,13 @@
 }
 
 .search {
-	background:#eee;
+	background:#ffffff;
 	height:25%;
 }
 
 .results {
-	background:#ddd;
-	height:75%;
+	background:#ffffff;
+	height:71%;	
+	overflow: scroll;
+	text-decoration: none;
 }

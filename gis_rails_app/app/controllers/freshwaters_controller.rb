@@ -4,8 +4,7 @@ class FreshwatersController < ApplicationController
  
     @geojson_data = Array.new
 		
-    @freshwaters = Freshwater.where("freshwater_type = ?","River").limit(200)
-    @freshwaters += Freshwater.where("id < ?",200)
+    @freshwaters = Freshwater.where("id < ?",200)
 		
 		@freshwaters.each do |freshwater|
 			
@@ -14,9 +13,9 @@ class FreshwatersController < ApplicationController
 		end
 
 		gon.geo_data = @geojson_data
-    gon.longitude = 41.85
-    gon.latitude = 50.36
-    gon.zoom_level = 6
+    gon.longitude = 35.00
+    gon.latitude = 45.00
+    gon.zoom_level = 4
     
   end
   
@@ -27,8 +26,7 @@ class FreshwatersController < ApplicationController
     
     @geojson_data = Array.new
     
-    @freshwaters = Freshwater.where("freshwater_type = ?","River").limit(200)
-    @freshwaters += Freshwater.where("id < ?",200)
+    @freshwaters = Freshwater.where("id < ?",200)
 		
 		@freshwaters.each do |freshwater|
 			
