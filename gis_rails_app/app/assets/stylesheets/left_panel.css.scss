@@ -1,18 +1,33 @@
 .left-panel {
 
-	float:left;
-	width:25%;
-	height:100%;
+	float: left;
+	width: 400px;
+	height: 908px;
 }
+
 
 .search {
-	background:#ffffff;
-	height:25%;
+	background: #ffffff;
+	height: 230px;
 }
 
+
 .results {
-	background:#ffffff;
-	height:71%;	
-	overflow: scroll;
-	text-decoration: none;
+	height: 678px;
+}
+
+
+.left-header {
+	width: 100%;
+	height: 30px;
+	background: #40a4df;
+	float: left;
+    opacity: 0.8;
+    
+    h2 {   
+        color:#ffffff;
+        opacity: 1;
+        font-size:20px;
+		margin:4px 0px 0px 4px;
+    }
 }
