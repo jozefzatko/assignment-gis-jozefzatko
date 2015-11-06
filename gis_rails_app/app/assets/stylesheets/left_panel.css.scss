@@ -1,33 +1,38 @@
+
 .left-panel {
 
 	float: left;
-	width: 400px;
+	width: 500px;
 	height: 908px;
 }
 
 
 .search {
+	
 	background: #ffffff;
 	height: 230px;
+	width: inherit;
 }
 
 
 .results {
+	
 	height: 678px;
+	width: inherit;
 }
 
 
 .left-header {
-	width: 100%;
+	
+	width: inherit;
 	height: 30px;
-	background: #40a4df;
-	float: left;
+	background: #55bbff;
     opacity: 0.8;
     
-    h2 {   
-        color:#ffffff;
+    h2 {
+        color: #ffffff;
         opacity: 1;
-        font-size:20px;
-		margin:4px 0px 0px 4px;
+        font-size: 18px;
+		padding: 6px 0px 0px 11px;
     }
 }

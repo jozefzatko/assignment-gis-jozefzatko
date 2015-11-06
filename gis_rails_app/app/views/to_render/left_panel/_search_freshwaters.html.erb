@@ -4,39 +4,52 @@
 		<h2>Search</h2>
 	</div>
 	
-	<div class="search-tooltip">
-	</div>
 	
-	<div class="body">
-		<div class="search-left">
+	<ul class="search-form">
+	
+		<%= form_for(Freshwater.new) do |f| %>
+			<li>
+				<div class="search-left">
 
-			<div class="search-left-1">
+					<div class="search-left-1">
 
-			</div>
+						<div class="search-area">
+							<%= text_field_tag 'search', nil, placeholder: 'Search in lakes, reservoirs and rivers ...' %>
+						</div>
 
-			<div class="search-left-2">
-			</div>
+					</div>
 
-			<div class="search-left-3">
-			</div>
+					<div class="search-left-2">
+						<ul class="search-left-2-ul">
+							<li><%= text_field_tag 'search', nil, placeholder: 'Area from...' %></li>
+							<li><%= text_field_tag 'search', nil, placeholder: 'Area to...' %></li>
+						</ul>
+					</div>
 
-			<div class="search-left-4">
-			</div>
+					<div class="search-left-3">
+						<%= f.collection_select :name, Country.order('name'), :id, :name, {prompt: 'All countries of the world'}, {:class=>'select'} %>
+					</div>
 
-			<div class="search-left-5">
-			</div>
+					<div class="search-left-4">
+						<%= f.collection_select :name, FreshwaterEcoregion.all, :id, :name, {prompt: 'All freshwaters ecoregions of the world'}, {:class=>'select'} %>
+					</div>
 
-		</div>
+				</div>
+			</li>
 
-
-		<div class="search-mid">
-
-		</div>
-
-
-		<div class="search-right">
-
-		</div>
-
-	</div>
+			<li>
+				<div class="search-right">
+					<div class ="checkboxes">
+						<%= f.check_box :name?, {:class => "checkbox"}, "checked-value", "unchecked-value" %> Lakes <br />
+						<%= f.check_box :name?, {:class => "checkbox"}, "checked-value", "unchecked-value" %> Reservoirs <br />
+						<%= f.check_box :name?, {:class => "checkbox"}, "checked-value", "unchecked-value" %> Rivers
+					</div>
+							
+					<div class="search-button">
+						<%= button_to "Search", freshwaters_path, {:class=>'button'} %>
+					</div>
+				</div>
+			</li>
+		<% end %>
+	</ul>
 </div>

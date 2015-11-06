@@ -1,4 +1,7 @@
-.results {
 
-	overflow-y: scroll;
+.result-list {
+
+	height: 648px;
+	overflow: scroll;
+	overflow-x: hidden;
 }
