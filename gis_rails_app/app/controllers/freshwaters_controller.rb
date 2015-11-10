@@ -1,15 +1,13 @@
 class FreshwatersController < ApplicationController
 
   def index
- 
+ 	
+    @freshwaters = Freshwater.where("id <= ?",200)
+		
     @geojson_data = Array.new
-		
-    @freshwaters = Freshwater.where("id < ?",200)
-		
+    
 		@freshwaters.each do |freshwater|
-			
       @geojson_data << freshwater.get_mapbox_point_geojson("small")
-			
 		end
 
 		gon.geo_data = @geojson_data
@@ -22,12 +20,12 @@ class FreshwatersController < ApplicationController
   
   def show
     
-    @freshwater = Freshwater.find(request.original_url.split('/')[4])
+    #todo: make this dynamic
+    @freshwater = Freshwater.find(request.original_url.split('/')[4]) 
     
-    @geojson_data = Array.new
-    
-    @freshwaters = Freshwater.where("id < ?",200)
+    @freshwaters = Freshwater.where("id <= ?",200)
 		
+    @geojson_data = Array.new
 		@freshwaters.each do |freshwater|
 			
       if freshwater.id == @freshwater.id
