@@ -137,21 +137,34 @@ class Freshwater < ActiveRecord::Base
     @geojson = {
 			"type": "Feature",
 			"geometry": {
-				"type": "Point",
+        "type": "Point",
 				"coordinates": [longitude,latitude]
-    			},
-    			"properties": {
-            "title":          "<h2>" + get_name.to_s + "</h2>",
-            "description":    get_tooltip,
-      			"marker-color":   "#fc4353",
-            "marker-size":    size,
-            "marker-symbol":  get_marker
-			}
+      },
+      "properties": {
+        "title":          "<h2>" + get_name.to_s + "</h2>",
+        "description":    get_tooltip,
+        "marker-color":   "#fc4353",
+        "marker-size":    size,
+        "marker-symbol":  get_marker
+        }
 		}
   end
   
   
   def get_coordinates
+    geometry = JSON.parse(json_coordinates)
+    
+    @geojson = {
+      "type": "Feature",
+      "properties": {
+        "fillColor": "#ffffff",
+        "fillOpacity": 0.0
+      },
+      "geometry": {
+        "type": "Polygon",
+        "coordinates": geometry["coordinates"],
+      }
+    }
   end
   
 end

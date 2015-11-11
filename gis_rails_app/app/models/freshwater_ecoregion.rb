@@ -30,15 +30,15 @@ class FreshwaterEcoregion < ActiveRecord::Base
 
   
   def longlat
-    record = ActiveRecord::Base.connection.execute("SELECT ST_AsGeoJSON(coordinates) FROM freshwater_ecoregions where id = " + id.to_s + ";")
-    result = JSON.parse(record[0]["st_asgeojson"])
     
-    if result["type"].to_s == "MultiPolygon"
-      point = result["coordinates"][0][0][0]
+    geometry = JSON.parse(json_coordinates)
+    
+    if geometry["type"].to_s == "MultiPolygon"
+      point = geometry["coordinates"][0][0][0]
     end
     
-    if result["type"].to_s == "Polygon"
-      point = result["coordinates"][0][0]
+    if geometry["type"].to_s == "Polygon"
+      point = geometry["coordinates"][0][0]
     end
     
     @longlat = point.split(",")[0]

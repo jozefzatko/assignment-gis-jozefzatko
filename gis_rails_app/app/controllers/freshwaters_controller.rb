@@ -39,6 +39,7 @@ class FreshwatersController < ApplicationController
     gon.longitude = @freshwater.longitude
     gon.latitude = @freshwater.latitude
     gon.zoom_level = @freshwater.get_zoom_level
+    gon.coordinates = @freshwater.get_coordinates
     
   end
 
