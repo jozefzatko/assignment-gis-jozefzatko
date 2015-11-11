@@ -31,11 +31,21 @@ class Freshwater < ActiveRecord::Base
   end
   
   
+  def get_name
+    if name.nil?
+      @name = "<<Unknown>>"
+    else
+      @name = name
+    end
+  end
+  
+  
   def get_type
     if freshwater_type.nil?
       @type = "-"
+    else
+      @type = freshwater_type.to_s
     end
-    @type = freshwater_type.to_s
   end
   
   
@@ -131,7 +141,7 @@ class Freshwater < ActiveRecord::Base
 				"coordinates": [longitude,latitude]
     			},
     			"properties": {
-						"title":          "<h2>" + name.to_s + "</h2>",
+            "title":          "<h2>" + get_name.to_s + "</h2>",
             "description":    get_tooltip,
       			"marker-color":   "#fc4353",
             "marker-size":    size,

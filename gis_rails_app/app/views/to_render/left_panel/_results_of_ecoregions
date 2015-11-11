@@ -1,0 +1,11 @@
+<div class="ecoregion-results">
+	
+	<div class="left-header">
+		<h2>Freshwater Ecoregions of the World</h2>
+	</div>
+	
+	<div class="ecoregion-result-list">
+		<%= render @freshwater_ecoregions %>
+	</div>
+		
+</div>

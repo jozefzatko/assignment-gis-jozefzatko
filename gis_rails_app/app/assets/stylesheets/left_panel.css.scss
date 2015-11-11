@@ -2,7 +2,7 @@
 .freshwater-left-panel {
 
 	float: left;
-	width: 500px;
+	width: 600px;
 	height: 908px;
 }
 
@@ -15,17 +15,23 @@
 }
 
 
-.search {
+.freshwater-results {
 	
-	background: #ffffff;
-	height: 230px;
+	height: 678px;
 	width: inherit;
 }
 
 
-.results {
+.ecoregion-results {
+	height: 878px;
+	width: inherit;
+}
+
+
+.search {
 	
-	height: 678px;
+	background: #ffffff;
+	height: 230px;
 	width: inherit;
 }
 

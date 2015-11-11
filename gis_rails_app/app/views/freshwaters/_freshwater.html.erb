@@ -1,13 +1,49 @@
 <div class="element">
 	<a href="<%= freshwater_path(freshwater) %>">
+		
+		<% if freshwater_counter.even? %>
 
-		<div class="freshwater-element"; background:#FFFFFF" onmouseover="this.style.background='#87CEFA';" onmouseout="this.style.background='#FFFFFF';">
+			<div class="freshwater-element">
+					
+				<div style="float: left; width: 40%; padding: 0px 0px 0px 12px;">
+					<%= freshwater.get_name %>
+				</div>
 
-			<big><%= freshwater.name %></big>
-			(<%= freshwater.get_type %>) |
-			<%= freshwater.get_country %> |
-			<%= freshwater.get_area %> km2
+				<div style="float: left; width: 20%;">
+					<%= freshwater.get_type %>
+				</div>
 
-		</div>
+				<div style="float: left; width: 20%;">
+					<%= freshwater.get_country %>
+				</div>
+
+				<div style="float: left; width: 20%;">
+					<%= freshwater.get_area %> km2
+				</div>
+			</div>
+			
+		<% else %>
+
+			<div class="freshwater-element">
+					
+				<div style="float: left; width: 40%; padding: 0px 0px 0px 12px; background:#F0F8FF">
+					<%= freshwater.get_name %>
+				</div>
+
+				<div style="float: left; width: 20%; background:#F0F8FF">
+					<%= freshwater.get_type %>
+				</div>
+
+				<div style="float: left; width: 20%; background:#F0F8FF">
+					<%= freshwater.get_country %>
+				</div>
+
+				<div style="float: left; width: 20%; background:#F0F8FF">
+					<%= freshwater.get_area %> km2
+				</div>
+			</div>
+						
+		<% end %>
+		
 	</a>
 </div>

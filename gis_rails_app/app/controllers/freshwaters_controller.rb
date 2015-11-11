@@ -2,7 +2,7 @@ class FreshwatersController < ApplicationController
 
   def index
  	
-    @freshwaters = Freshwater.where("id <= ?",200)
+    @freshwaters = Freshwater.where("id <= ?",250)
 		
     @geojson_data = Array.new
     
