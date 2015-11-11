@@ -1,12 +1,7 @@
-<div class="map">
+<div id='map'></div>
 
-	<div id='map'></div>
-
-	<script>
-		L.mapbox.accessToken = 'pk.eyJ1IjoiZG9kbzcwNzEiLCJhIjoiY2lmZWoybWg1MDBpbnRha241dmQ0Mm80dyJ9.gaI7v5oYAZOGIpTAhvLreg';
-		var map = L.mapbox.map('map', 'dodo7071.cifej2m7o00iuuelyy9gipvq7').setView([gon.latitude, gon.longitude], gon.zoom_level).featureLayer.setGeoJSON(gon.geo_data);
+<script>
+	L.mapbox.accessToken = 'pk.eyJ1IjoiZG9kbzcwNzEiLCJhIjoiY2lmZWoybWg1MDBpbnRha241dmQ0Mm80dyJ9.gaI7v5oYAZOGIpTAhvLreg';
+	var map = L.mapbox.map('map', 'dodo7071.cifej2m7o00iuuelyy9gipvq7').setView([gon.latitude, gon.longitude], gon.zoom_level).featureLayer.setGeoJSON(gon.geo_data);
 		
-	</script>
-		
-</div>
-	
+</script>

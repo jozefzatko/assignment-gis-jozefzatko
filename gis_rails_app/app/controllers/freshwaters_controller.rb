@@ -14,7 +14,7 @@ class FreshwatersController < ApplicationController
     gon.longitude = 35.00
     gon.latitude = 45.00
     gon.zoom_level = 4
-    
+   
   end
   
   
