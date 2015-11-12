@@ -7,41 +7,38 @@ class FreshwaterEcoregion < ActiveRecord::Base
     
     # todo: make this dynamic
     @tooltip += "<a href=\"http://localhost:3000/freshwater_ecoregions/" + id.to_s + "\">More info</a>"
+    @tooltip += " | "
+    @tooltip += "<a href=\"" + web_page.to_s + "\">Oficial web page</a>"
   end
-  
-  
-  def get_mapbox_point_geojson(size)
-    
-    @geojson = {
-			"type": "Feature",
-			"geometry": {
-				"type": "Point",
-				"coordinates": longlat
-    			},
-    			"properties": {
-						"title":          "<h2>" + name.to_s + "</h2>",
-            "description":    get_tooltip,
-      			"marker-color":   "#fc4353",
-            "marker-size":    size,
-            "marker-symbol":  "wetland"
-			}
-		}
-  end
-
   
   def longlat
     
     geometry = JSON.parse(json_coordinates)
     
-    if geometry["type"].to_s == "MultiPolygon"
-      point = geometry["coordinates"][0][0][0]
-    end
-    
-    if geometry["type"].to_s == "Polygon"
-      point = geometry["coordinates"][0][0]
-    end
+    record = ActiveRecord::Base.connection.execute("SELECT ST_AsGeoJSON(ST_PointOnSurface(ST_MakeValid(coordinates))) FROM freshwater_ecoregions where id = " + id.to_s + ";")
+    point = JSON.parse(record[0]["st_asgeojson"])["coordinates"]
     
     @longlat = point.split(",")[0]
+  end
+  
+  
+  def get_coordinates
+    geometry = JSON.parse(json_coordinates)
+    
+    @geojson = {
+      "type": "Feature",
+      "properties": {
+        "title":          "<h2>" + name.to_s + "</h2>",
+        "description":    get_tooltip,
+        "marker-color":   "#fc4353",
+        "marker-size":    "small",
+        "marker-symbol":  "wetland"
+      },
+      "geometry": {
+        "type": geometry["type"].to_s,
+        "coordinates": geometry["coordinates"],
+        }
+      }
   end
   
 end
