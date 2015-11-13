@@ -17,6 +17,19 @@ class FreshwaterEcoregionsController < ApplicationController
   
   def show
     @freshwater_ecoregion = FreshwaterEcoregion.find(params[:id])
+    @freshwaters = Freshwater.first(10)
+    
+    @geojson_data = Array.new
+    @freshwaters.each do |freshwater|
+      @geojson_data << freshwater.get_mapbox_point_geojson("small")
+    end
+    
+    @geojson_data << @freshwater_ecoregion.get_coordinates 
+      
+    gon.geo_data = @geojson_data
+    gon.longitude = @freshwater_ecoregion.longlat[0]
+    gon.latitude = @freshwater_ecoregion.longlat[1]
+    gon.zoom_level = @freshwater_ecoregion.get_zoom_level
   end
 
 end

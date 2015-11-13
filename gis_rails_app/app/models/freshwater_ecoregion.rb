@@ -41,4 +41,15 @@ class FreshwaterEcoregion < ActiveRecord::Base
       }
   end
   
+  
+  def get_zoom_level
+    geometry = JSON.parse(json_coordinates)
+    
+    if geometry["type"].to_s == "Polygon"
+      @zoom_level = 14 - area_km2.to_s.length
+    else
+      @zoom_level = 14 - area_km2.to_s.length
+    end
+  end
+  
 end

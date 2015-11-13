@@ -1,0 +1,61 @@
+
+<div class="ecoregion-show">
+	
+	<div class="left-header">
+		<h2><%= @freshwater_ecoregion.name %></h2>
+	</div>
+	
+	<div class="ecoregion-details">
+	
+		<div class="ecoregion-realm">	
+			<div style="float: left; width: 30%; padding: 8px 0px 2px 20px;">
+				<b>Realm:</b>
+			</div>
+			<div style="float: left; width: 70%; padding: 8px 0px 2px 0px;">
+				<%= @freshwater_ecoregion.realm %>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		
+		<div class="ecoregion-major-habitat-type">	
+			<div style="float: left; width: 30%; padding: 0px 0px 2px 20px;">
+				<b>Major habitat type: </b>
+			</div>
+			<div style="float: left; width: 70%; padding: 0px 0px 2px 0px;">
+				<%= @freshwater_ecoregion.major_habitat_type %>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+			
+		<div class="ecoregion-area">	
+			<div style="float: left; width: 30%; padding: 0px 0px 2px 20px;">
+				<b>Area:</b>
+			</div>
+			<div style="float: left; width: 70%; padding: 0px 0px 2px 0px;">
+				<%= @freshwater_ecoregion.area_km2 %> km2
+			</div>
+			<div style="clear:both"></div>
+		</div>
+		
+		<div class="ecoregion-web-page">	
+			<div style="float: left; width: 30%; padding: 0px 0px 8px 20px;">
+				<b>Web page: </b>
+			</div>
+			<div style="float: left; width: 70%; padding: 0px 0px 8px 0px;">
+				<a href="<%= @freshwater_ecoregion.web_page %>"><%= @freshwater_ecoregion.web_page %></a>
+			</div>
+			<div style="clear:both"></div>
+		</div>
+	
+	</div>
+	
+	<div class="left-header">
+		<h2>Selected lakes, reservoirs and rivers</h2>
+	</div>
+	
+	<div class="freshwater-result-list-eco">
+		<%= render @freshwaters %>
+	</div>
+
+		
+</div>
