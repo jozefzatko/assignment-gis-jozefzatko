@@ -7,31 +7,31 @@
 	
 	<ul class="search-form">
 	
-		<%= form_for(Freshwater.new) do |f| %>
+		<%= form_tag '/freshwaters', method: :get do %>
 			<li>
 				<div class="search-left">
 
 					<div class="search-left-1">
 
 						<div class="search-area">
-							<%= text_field_tag 'search', nil, placeholder: 'Search in freshwater lakes, reservoirs and rivers ...' %>
+							<%= text_field_tag 'expression', nil, placeholder: 'Search in freshwater lakes, reservoirs and rivers ...' %>
 						</div>
 
 					</div>
 
 					<div class="search-left-2">
 						<ul class="search-left-2-ul">
-							<li><%= text_field_tag 'search', nil, placeholder: 'Area from...' %></li>
-							<li><%= text_field_tag 'search', nil, placeholder: 'Area to...' %></li>
+							<li><%= text_field_tag 'area_from', nil, placeholder: 'Area from...' %></li>
+							<li><%= text_field_tag 'area_to', nil, placeholder: 'Area to...' %></li>
 						</ul>
 					</div>
 
 					<div class="search-left-3">
-						<%= f.collection_select :name, Country.order('name'), :id, :name, {prompt: 'All countries of the world'}, {:class=>'select'} %>
+						<%= collection_select( :country, nil, Country.order('name'), :name, :name, {prompt: 'All countries of the world'}, {:class=>'select'}) %>
 					</div>
 
 					<div class="search-left-4">
-						<%= f.collection_select :name, FreshwaterEcoregion.all, :id, :name, {prompt: 'All freshwaters ecoregions of the world'}, {:class=>'select'} %>
+						<%= collection_select :ecoregion, nil, FreshwaterEcoregion.all, :id, :name, {prompt: 'All freshwaters ecoregions of the world'}, {:class=>'select'} %>
 					</div>
 
 				</div>
@@ -40,13 +40,13 @@
 			<li>
 				<div class="search-right">
 					<div class ="checkboxes">
-						<%= f.check_box :name?, {:class => "checkbox"}, "checked-value", "unchecked-value" %> Lakes <br />
-						<%= f.check_box :name?, {:class => "checkbox"}, "checked-value", "unchecked-value" %> Reservoirs <br />
-						<%= f.check_box :name?, {:class => "checkbox"}, "checked-value", "unchecked-value" %> Rivers
+						<%= check_box_tag 'lakes', 'yes', true %> Lakes <br />
+						<%= check_box_tag 'reservoirs', 'yes', true %> Reservoirs <br />
+						<%= check_box_tag 'rivers', 'yes', true %> Rivers
 					</div>
 							
 					<div class="search-button">
-						<%= button_to "Search", freshwaters_path, {:class=>'button'} %>
+						<%= submit_tag 'Search', class: "btn btn-large btn-primary" %>
 					</div>
 				</div>
 			</li>

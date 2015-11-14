@@ -52,6 +52,8 @@ class Freshwater < ActiveRecord::Base
   def get_country
     if country.nil?
       @country = "-"
+    elsif country == "United States of America"
+      @country = "USA"
     else
       @country = country.to_s
     end
