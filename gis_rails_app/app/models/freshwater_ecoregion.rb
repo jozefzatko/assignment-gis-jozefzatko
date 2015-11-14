@@ -1,7 +1,10 @@
 class FreshwaterEcoregion < ActiveRecord::Base
-
+  
+  belongs_to :continent
+  
   def get_tooltip
-    @tooltip  =  "<b>Realm:</b> "                  + realm                                    + "<br>"
+    @tooltip  =  "<b>Continent:</b> "              + continent.name                           + "<br>"
+    @tooltip +=  "<b>Realm:</b> "                  + realm                                    + "<br>"
     @tooltip +=  "<b>Major habitat type:</b> "     + major_habitat_type                       + "<br>"
     @tooltip +=  "<b>Area:</b> "                   + area_km2.to_s            + " km2"        + "<br>"
     

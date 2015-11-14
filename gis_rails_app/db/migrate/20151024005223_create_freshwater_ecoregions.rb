@@ -4,6 +4,7 @@ class CreateFreshwaterEcoregions < ActiveRecord::Migration
 
       t.integer   "feow_id"
       t.text      "name",                 limit: 50
+      t.integer   "continent_id"
       t.text      "realm",                limit: 50
       t.text      "major_habitat_type",   limit: 50
       t.float     "area_km2"
@@ -11,7 +12,7 @@ class CreateFreshwaterEcoregions < ActiveRecord::Migration
       
       t.geometry "coordinates",           limit: {:srid=>4326, :type=>"geometry"}
       t.text     "json_coordinates"
-      
+           
       t.timestamps null: false
     end
     

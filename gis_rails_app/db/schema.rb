@@ -11,11 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151024222829) do
+ActiveRecord::Schema.define(version: 20151113223402) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
   enable_extension "postgis"
+
+  create_table "continents", force: :cascade do |t|
+    t.text     "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "countries", force: :cascade do |t|
     t.text     "iso_code"
@@ -36,6 +42,7 @@ ActiveRecord::Schema.define(version: 20151024222829) do
   create_table "freshwater_ecoregions", force: :cascade do |t|
     t.integer  "feow_id"
     t.text     "name"
+    t.integer  "continent_id"
     t.text     "realm"
     t.text     "major_habitat_type"
     t.float    "area_km2"

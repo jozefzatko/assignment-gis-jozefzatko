@@ -20,6 +20,18 @@ freshwater_file_1 		= "/home/jozef/rails_projects/assignment-gis-jozefzatko/data
 freshwater_file_2 		= "/home/jozef/rails_projects/assignment-gis-jozefzatko/data/glwd_2.json"
 freshwater_file_3 		= "/home/jozef/rails_projects/assignment-gis-jozefzatko/data/glwd_3.json"
 
+### Continents ###############################################################################################
+
+Continent.create(name: "North America")
+Continent.create(name: "Central America")
+Continent.create(name: "South America")
+Continent.create(name: "Europe")
+Continent.create(name: "Africa")
+Continent.create(name: "Asia")
+Continent.create(name: "Australia and Oceania")
+Continent.create(name: "Antarctica")
+
+
 ### Countries ################################################################################################
 
 data_hash = JSON.parse(File.read(countries_file))
@@ -61,9 +73,29 @@ i = 0
 
 data_hash['features'].each do |ecoregion|
 		
+	id = case ecoregion["properties"]["FEOW_ID"]
+	when 101..176
+		1
+	when 201..217
+		2
+	when 301..352
+		3
+	when 401..453
+		4
+	when 501..587
+		5
+	when 601..643
+		6
+	when 701..769
+		6
+	when 801..830
+		7
+	end
+	
 	FreshwaterEcoregion.create(
 		
 		feow_id:							ecoregion["properties"]["FEOW_ID"],
+		continent_id:					id,
     realm:								ecoregions_data[i+1].to_s,
     major_habitat_type:		ecoregions_data[i+2].to_s,
 		name:									ecoregions_data[i+3].to_s,
@@ -143,6 +175,9 @@ data_hash = JSON.parse(File.read(freshwater_file_3))
 data_hash['features'].each do |freshwtr|
 
 	if freshwtr["properties"]["TYPE"] == "Lake" or freshwtr["properties"]["TYPE"] == "Reservoir"
+		# lakes and reservoirs
+	elsif freshwtr["geometry"].nil?
+		# json_coordinates is nil
 	else
 		
 		Freshwater.create(
