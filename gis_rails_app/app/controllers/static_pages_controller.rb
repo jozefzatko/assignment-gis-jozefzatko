@@ -22,7 +22,4 @@ class StaticPagesController < ApplicationController
 		gon.geo_data = @geojson_data
 	end
 
-	def about_project
-	end
-
 end
