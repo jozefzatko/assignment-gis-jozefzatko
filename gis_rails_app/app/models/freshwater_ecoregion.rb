@@ -3,6 +3,7 @@ class FreshwaterEcoregion < ActiveRecord::Base
   belongs_to :continent
   has_many :freshwaters
   
+  
   def get_tooltip
     @tooltip  =  "<b>Continent:</b> "              + continent.name                           + "<br>"
     @tooltip +=  "<b>Realm:</b> "                  + realm                                    + "<br>"

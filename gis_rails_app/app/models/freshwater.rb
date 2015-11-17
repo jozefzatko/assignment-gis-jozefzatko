@@ -2,6 +2,7 @@ class Freshwater < ActiveRecord::Base
   
   belongs_to :freshwater_ecoregion
   
+  
   def get_marker
     if freshwater_type == "Lake"  
       @marker = "water"
@@ -29,16 +30,23 @@ class Freshwater < ActiveRecord::Base
     
     # todo: make this dynamic
     @tooltip += "<a href=\"http://localhost:3000/freshwaters/" + id.to_s + "\">Target this " + get_type.to_s.downcase +  "</a>"
-    @tooltip += " | "
-    @tooltip += "<a href=\"http://localhost:3000/freshwaters/" + id.to_s + "\">Show near " + get_type.to_s.downcase.pluralize +  "</a>"
   end
   
   
   def get_name
     if name.nil?
-      @name = "<<Unknown>>"
+      @name = "--Unknown--"
     else
       @name = name
+    end
+  end
+  
+  
+  def get_short_name
+    if get_name.length >= 30 
+      @name = get_name[0..28] + "..."
+    else
+      @name = get_name
     end
   end
   
