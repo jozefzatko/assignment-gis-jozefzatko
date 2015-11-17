@@ -31,7 +31,6 @@ Continent.create(name: "Asia")
 Continent.create(name: "Australia and Oceania")
 Continent.create(name: "Antarctica")
 
-
 ### Countries ################################################################################################
 
 data_hash = JSON.parse(File.read(countries_file))
@@ -70,6 +69,7 @@ end
 
 data_hash = JSON.parse(File.read(feow_hydrosheds_file))
 i = 0
+count_of_freshwater_ecoregions = 0
 
 data_hash['features'].each do |ecoregion|
 		
@@ -106,13 +106,13 @@ data_hash['features'].each do |ecoregion|
 	)
 	
 	i += 5
-	
+	count_of_freshwater_ecoregions += 1
 end
 
 connection.execute(" UPDATE freshwater_ecoregions SET json_coordinates = replace(json_coordinates, '=>', ':'); ")
 connection.execute(" UPDATE freshwater_ecoregions SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326); ")
 
-for i in 1..426
+for i in 1..count_of_freshwater_ecoregions 
 	record = connection.execute("SELECT ST_AsGeoJSON(ST_PointOnSurface(ST_MakeValid(coordinates))) FROM freshwater_ecoregions where id = " + i.to_s + ";")
 	point = JSON.parse(record[0]["st_asgeojson"])["coordinates"]
 	
@@ -129,27 +129,34 @@ puts "Still seeding..."
 
 data_hash = JSON.parse(File.read(freshwater_file_1))
 
+count_of_freshwaters = 0
+
 data_hash['features'].each do |freshwtr|
 
-	Freshwater.create(
+	if freshwtr["geometry"].nil?
+		# json_coordinates is nil
+	else
+		Freshwater.create(
+
+			feow_id: 							freshwtr["properties"]["FEOW_ID"],
+			name: 								freshwtr["properties"]["LAKE_NAME"],
+			freshwater_type:			freshwtr["properties"]["TYPE"],
+			area_km2:							freshwtr["properties"]["AREA_SKM"],
+			perimeter_km:					freshwtr["properties"]["PERIM_KM"],
+			longitude:						freshwtr["properties"]["LONG_DEG"],
+			latitude:							freshwtr["properties"]["LAT_DEG"],
+			elevation:						freshwtr["properties"]["ELEV_M"],
+			country:							freshwtr["properties"]["COUNTRY"],
+			secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
+			river:								freshwtr["properties"]["RIVER"],
+			near_city:						freshwtr["properties"]["NEAR_CITY"],
+
+			json_coordinates:			freshwtr["geometry"].to_s
+
+			)
 		
-		feow_id: 							freshwtr["properties"]["FEOW_ID"],
-		name: 								freshwtr["properties"]["LAKE_NAME"],
-		freshwater_type:			freshwtr["properties"]["TYPE"],
-		area_km2:							freshwtr["properties"]["AREA_SKM"],
-		perimeter_km:					freshwtr["properties"]["PERIM_KM"],
-		longitude:						freshwtr["properties"]["LONG_DEG"],
-		latitude:							freshwtr["properties"]["LAT_DEG"],
-		elevation:						freshwtr["properties"]["ELEV_M"],
-		country:							freshwtr["properties"]["COUNTRY"],
-		secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
-		river:								freshwtr["properties"]["RIVER"],
-		near_city:						freshwtr["properties"]["NEAR_CITY"],
-		
-		json_coordinates:			freshwtr["geometry"].to_s
-		
-		) unless freshwtr["geometry"].nil?
-	
+		count_of_freshwaters += 1
+	end
 end
 
 ### Freshwater no. 2 #########################################################################################
@@ -158,62 +165,90 @@ data_hash = JSON.parse(File.read(freshwater_file_2))
 
 data_hash['features'].each do |freshwtr|
 
-	Freshwater.create(
+	if freshwtr["geometry"].nil?
+		# json_coordinates is nil
+	else
+		Freshwater.create(
+
+			feow_id: 							freshwtr["properties"]["FEOW_ID"],
+			name: 								freshwtr["properties"]["LAKE_NAME"],
+			freshwater_type:			freshwtr["properties"]["TYPE"],
+			area_km2:							freshwtr["properties"]["AREA_SKM"],
+			perimeter_km:					freshwtr["properties"]["PERIM_KM"],
+			longitude:						freshwtr["properties"]["LONG_DEG"],
+			latitude:							freshwtr["properties"]["LAT_DEG"],
+			elevation:						freshwtr["properties"]["ELEV_M"],
+			country:							freshwtr["properties"]["COUNTRY"],
+			secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
+			river:								freshwtr["properties"]["RIVER"],
+			near_city:						freshwtr["properties"]["NEAR_CITY"],
+
+			json_coordinates:			freshwtr["geometry"].to_s
+
+			)
 		
-		feow_id: 							freshwtr["properties"]["FEOW_ID"],
-		name: 								freshwtr["properties"]["LAKE_NAME"],
-		freshwater_type:			freshwtr["properties"]["TYPE"],
-		area_km2:							freshwtr["properties"]["AREA_SKM"],
-		perimeter_km:					freshwtr["properties"]["PERIM_KM"],
-		longitude:						freshwtr["properties"]["LONG_DEG"],
-		latitude:							freshwtr["properties"]["LAT_DEG"],
-		elevation:						freshwtr["properties"]["ELEV_M"],
-		country:							freshwtr["properties"]["COUNTRY"],
-		secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
-		river:								freshwtr["properties"]["RIVER"],
-		near_city:						freshwtr["properties"]["NEAR_CITY"],
-		
-		json_coordinates:			freshwtr["geometry"].to_s
-		
-		) unless freshwtr["geometry"].nil?
+		count_of_freshwaters += 1
+	end
 	
 end
 
 ### Freshwater no. 3 #########################################################################################
 
-data_hash = JSON.parse(File.read(freshwater_file_3))
+#data_hash = JSON.parse(File.read(freshwater_file_3))
 
-data_hash['features'].each do |freshwtr|
+#data_hash['features'].each do |freshwtr|
 
-	if freshwtr["properties"]["TYPE"] == "Lake" or freshwtr["properties"]["TYPE"] == "Reservoir"
+#	if freshwtr["properties"]["TYPE"] == "Lake" or freshwtr["properties"]["TYPE"] == "Reservoir"
 		# lakes and reservoirs
-	elsif freshwtr["geometry"].nil?
+#	elsif freshwtr["geometry"].nil?
 		# json_coordinates is nil
-	else
+#	else
 		
-		Freshwater.create(
+#		Freshwater.create(
 
-				feow_id: 							freshwtr["properties"]["FEOW_ID"],
-				name: 								freshwtr["properties"]["LAKE_NAME"],
-				freshwater_type:			freshwtr["properties"]["TYPE"],
-				area_km2:							freshwtr["properties"]["AREA_SKM"],
-				perimeter_km:					freshwtr["properties"]["PERIM_KM"],
-				longitude:						freshwtr["properties"]["LONG_DEG"],
-				latitude:							freshwtr["properties"]["LAT_DEG"],
-				elevation:						freshwtr["properties"]["ELEV_M"],
-				country:							freshwtr["properties"]["COUNTRY"],
-				secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
-				river:								freshwtr["properties"]["RIVER"],
-				near_city:						freshwtr["properties"]["NEAR_CITY"],
+#				feow_id: 							freshwtr["properties"]["FEOW_ID"],
+#				name: 								freshwtr["properties"]["LAKE_NAME"],
+#				freshwater_type:			freshwtr["properties"]["TYPE"],
+#				area_km2:							freshwtr["properties"]["AREA_SKM"],
+#				perimeter_km:					freshwtr["properties"]["PERIM_KM"],
+#				longitude:						freshwtr["properties"]["LONG_DEG"],
+#				latitude:							freshwtr["properties"]["LAT_DEG"],
+#				elevation:						freshwtr["properties"]["ELEV_M"],
+#				country:							freshwtr["properties"]["COUNTRY"],
+#				secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
+#				river:								freshwtr["properties"]["RIVER"],
+#				near_city:						freshwtr["properties"]["NEAR_CITY"],
 
-				json_coordinates:			freshwtr["geometry"].to_s
+#				json_coordinates:			freshwtr["geometry"].to_s
 
-				)
-	end
-end
+#				)
+		
+#		count_of_freshwaters += 1
+#	end
+#end
 
 connection.execute(" UPDATE freshwaters SET json_coordinates = replace(json_coordinates, '=>', ':'); ")
 connection.execute(" UPDATE freshwaters SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326); ")
+
+ecoregions_geometry = Array.new
+
+for i in 1..count_of_freshwater_ecoregions
+	record = connection.execute(" SELECT coordinates FROM freshwater_ecoregions WHERE id = " + i.to_s + " ;" )
+	ecoregions_geometry[i] = record[0].to_s.split("\"")[3]
+end
+
+for i in 1..count_of_freshwaters
+	record = connection.execute(" SELECT longitude, latitude FROM freshwaters WHERE id = " + i.to_s + ";" )
+	longitude = record[0].to_s.split("\"")[3]
+	latitude = record[0].to_s.split("\"")[7]
+
+	for j in 1..count_of_freshwater_ecoregions
+		record = connection.execute(" SELECT ST_Contains(coordinates, ST_SetSRID(ST_Point(" + longitude + "," + latitude + "),4326)) FROM freshwater_ecoregions WHERE id = "+ j.to_s + ";" )
+		if record[0] == {"st_contains"=>"t"}
+			connection.execute(" UPDATE freshwaters SET freshwater_ecoregion_id = " + j.to_s + " WHERE id = " + i.to_s + "; ")
+		end
+	end
+end
 
 puts "Seeding complete."
 

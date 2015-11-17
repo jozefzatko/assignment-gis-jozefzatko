@@ -59,6 +59,7 @@ ActiveRecord::Schema.define(version: 20151113223402) do
 
   create_table "freshwaters", force: :cascade do |t|
     t.integer  "feow_id"
+    t.integer  "freshwater_ecoregion_id"
     t.text     "name"
     t.text     "freshwater_type"
     t.float    "area_km2"
@@ -70,15 +71,16 @@ ActiveRecord::Schema.define(version: 20151113223402) do
     t.text     "secondary_countries"
     t.text     "river"
     t.text     "near_city"
-    t.geometry "coordinates",         limit: {:srid=>4326, :type=>"geometry"}
+    t.geometry "coordinates",             limit: {:srid=>4326, :type=>"geometry"}
     t.text     "json_coordinates"
-    t.datetime "created_at",                                                   null: false
-    t.datetime "updated_at",                                                   null: false
+    t.datetime "created_at",                                                       null: false
+    t.datetime "updated_at",                                                       null: false
   end
 
   add_index "freshwaters", ["area_km2"], name: "index_freshwaters_on_area_km2", using: :btree
   add_index "freshwaters", ["coordinates"], name: "index_freshwaters_on_coordinates", using: :gist
   add_index "freshwaters", ["country"], name: "index_freshwaters_on_country", using: :btree
+  add_index "freshwaters", ["freshwater_ecoregion_id"], name: "index_freshwaters_on_freshwater_ecoregion_id", using: :btree
   add_index "freshwaters", ["freshwater_type"], name: "index_freshwaters_on_freshwater_type", using: :btree
   add_index "freshwaters", ["name"], name: "index_freshwaters_on_name", using: :btree
 

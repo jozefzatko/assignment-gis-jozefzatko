@@ -17,7 +17,9 @@ class FreshwaterEcoregionsController < ApplicationController
   
   def show
     @freshwater_ecoregion = FreshwaterEcoregion.find(params[:id])
-    @freshwaters = Freshwater.first(10)
+    @freshwaters = Freshwater.where("freshwater_ecoregion_id = ?", params[:id]).order(area_km2: :desc).limit(50)
+    
+    FreshwatersController.class_variable_set(:@@freshwaters, @freshwaters)
     
     @geojson_data = Array.new
     @freshwaters.each do |freshwater|

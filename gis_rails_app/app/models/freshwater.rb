@@ -1,5 +1,7 @@
 class Freshwater < ActiveRecord::Base
   
+  belongs_to :freshwater_ecoregion
+  
   def get_marker
     if freshwater_type == "Lake"  
       @marker = "water"
@@ -16,6 +18,7 @@ class Freshwater < ActiveRecord::Base
   def get_tooltip
     @tooltip =  "<b>Type:</b> "             + get_type.to_s                             + "<br>"
     @tooltip += "<b>Country:</b> "          + get_country.to_s          + ""            + "<br>"
+    @tooltip += "<b>Ecoregion:</b> "        + "<a href=\"http://localhost:3000/freshwater_ecoregions/" + freshwater_ecoregion_id.to_s + "\">" + get_freshwater_ecoregion_name +  "</a>"         + "<br>"
     @tooltip += "<b>Area:</b> "             + get_area.to_s             + " km2"        +" <br>"
     @tooltip += "<b>River:</b> "            + get_river.to_s                            + "<br>"          if freshwater_type == "Reservoir"
     @tooltip += "<b>Perimeter:</b> "        + get_perimeter.to_s        + " km"         + "<br>"
@@ -131,6 +134,15 @@ class Freshwater < ActiveRecord::Base
       @gps = "-"
     else
       @gps = "[" + longitude.to_s + ", " + latitude.to_s + "]"
+    end
+  end
+  
+  
+  def get_freshwater_ecoregion_name
+    if freshwater_ecoregion.nil?
+      @name = "-"
+    else
+      freshwater_ecoregion.name.to_s
     end
   end
   

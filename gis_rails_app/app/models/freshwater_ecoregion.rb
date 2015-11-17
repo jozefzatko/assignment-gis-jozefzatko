@@ -1,6 +1,7 @@
 class FreshwaterEcoregion < ActiveRecord::Base
   
   belongs_to :continent
+  has_many :freshwaters
   
   def get_tooltip
     @tooltip  =  "<b>Continent:</b> "              + continent.name                           + "<br>"
@@ -12,14 +13,6 @@ class FreshwaterEcoregion < ActiveRecord::Base
     @tooltip += "<a href=\"http://localhost:3000/freshwater_ecoregions/" + id.to_s + "\">More info</a>"
     @tooltip += " | "
     @tooltip += "<a href=\"" + web_page.to_s + "\">Oficial web page</a>"
-  end
-  
-  def longlat
-    
-    record = ActiveRecord::Base.connection.execute("SELECT ST_AsGeoJSON(ST_PointOnSurface(ST_MakeValid(coordinates))) FROM freshwater_ecoregions where id = " + id.to_s + ";")
-    point = JSON.parse(record[0]["st_asgeojson"])["coordinates"]
-    
-    @longlat = point.split(",")[0]
   end
   
   
