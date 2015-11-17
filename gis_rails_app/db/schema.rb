@@ -74,6 +74,10 @@ ActiveRecord::Schema.define(version: 20151113223402) do
     t.datetime "updated_at",                                                   null: false
   end
 
+  add_index "freshwaters", ["area_km2"], name: "index_freshwaters_on_area_km2", using: :btree
   add_index "freshwaters", ["coordinates"], name: "index_freshwaters_on_coordinates", using: :gist
+  add_index "freshwaters", ["country"], name: "index_freshwaters_on_country", using: :btree
+  add_index "freshwaters", ["freshwater_type"], name: "index_freshwaters_on_freshwater_type", using: :btree
+  add_index "freshwaters", ["name"], name: "index_freshwaters_on_name", using: :btree
 
 end
