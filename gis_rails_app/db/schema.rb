@@ -45,6 +45,8 @@ ActiveRecord::Schema.define(version: 20151113223402) do
     t.integer  "continent_id"
     t.text     "realm"
     t.text     "major_habitat_type"
+    t.float    "longitude"
+    t.float    "latitude"
     t.float    "area_km2"
     t.text     "web_page"
     t.geometry "coordinates",        limit: {:srid=>4326, :type=>"geometry"}

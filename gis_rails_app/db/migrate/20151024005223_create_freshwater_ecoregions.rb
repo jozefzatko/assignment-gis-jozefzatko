@@ -7,6 +7,8 @@ class CreateFreshwaterEcoregions < ActiveRecord::Migration
       t.integer   "continent_id"
       t.text      "realm",                limit: 50
       t.text      "major_habitat_type",   limit: 50
+      t.float     "longitude"
+      t.float     "latitude"
       t.float     "area_km2"
       t.text      "web_page",             limit: 100
       

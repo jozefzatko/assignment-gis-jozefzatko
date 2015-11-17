@@ -16,8 +16,6 @@ class FreshwaterEcoregion < ActiveRecord::Base
   
   def longlat
     
-    geometry = JSON.parse(json_coordinates)
-    
     record = ActiveRecord::Base.connection.execute("SELECT ST_AsGeoJSON(ST_PointOnSurface(ST_MakeValid(coordinates))) FROM freshwater_ecoregions where id = " + id.to_s + ";")
     point = JSON.parse(record[0]["st_asgeojson"])["coordinates"]
     

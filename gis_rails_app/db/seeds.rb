@@ -91,7 +91,7 @@ data_hash['features'].each do |ecoregion|
 	when 801..830
 		7
 	end
-	
+
 	FreshwaterEcoregion.create(
 		
 		feow_id:							ecoregion["properties"]["FEOW_ID"],
@@ -111,6 +111,17 @@ end
 
 connection.execute(" UPDATE freshwater_ecoregions SET json_coordinates = replace(json_coordinates, '=>', ':'); ")
 connection.execute(" UPDATE freshwater_ecoregions SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326); ")
+
+for i in 1..426
+	record = connection.execute("SELECT ST_AsGeoJSON(ST_PointOnSurface(ST_MakeValid(coordinates))) FROM freshwater_ecoregions where id = " + i.to_s + ";")
+	point = JSON.parse(record[0]["st_asgeojson"])["coordinates"]
+	
+	longitude = point.split(",")[0][0]
+	latitude = point.split(",")[0][1]
+	
+	connection.execute(" UPDATE freshwater_ecoregions SET longitude= " + longitude.to_s + " where id = " + i.to_s + "; ")
+	connection.execute(" UPDATE freshwater_ecoregions SET latitude = " + latitude.to_s  + " where id = " + i.to_s + "; ")
+end
 
 ### Freshwater no. 1 #########################################################################################
 

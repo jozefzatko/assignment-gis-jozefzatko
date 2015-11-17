@@ -27,8 +27,8 @@ class FreshwaterEcoregionsController < ApplicationController
     @geojson_data << @freshwater_ecoregion.get_coordinates 
       
     gon.geo_data = @geojson_data
-    gon.longitude = @freshwater_ecoregion.longlat[0]
-    gon.latitude = @freshwater_ecoregion.longlat[1]
+    gon.longitude = @freshwater_ecoregion.longitude
+    gon.latitude = @freshwater_ecoregion.latitude
     gon.zoom_level = @freshwater_ecoregion.get_zoom_level
   end
 
