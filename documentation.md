@@ -1,5 +1,5 @@
 
-# Overview
+## Overview
 
 This application written in Ruby on Rails(v4.2.4) shows freshwater lakes, reservoirs and rivers of the world with related ecoregions. Most important features are:
 - search in freshwater lakes, reservoirs and rivers by name, area, country, ecoregion, type
@@ -9,41 +9,45 @@ This application written in Ruby on Rails(v4.2.4) shows freshwater lakes, reserv
 
 [Project source with specification](https://github.com/jozefzatko/assignment-gis-jozefzatko/)
 
-# Screenshots
+## Screenshots
 
-Search in freshwater lakes, reservoirs and rivers
+Search in freshwater lakes, reservoirs and rivers by different parameters
 ![Screenshot](screenshots/screenshot1.png)
 
-Show details
+Show details of lake
 ![Screenshot](screenshots/screenshot2.png)
 
-Ecoregions of the world
+All ecoregions of the world
 ![Screenshot](screenshots/screenshot3.png)
 
 Ecoregion details
 ![Screenshot](screenshots/screenshot4.png)
 
 
-# Frontend
+## Frontend
 Application frontent consists of:
-- Mapbox(v2.2) map showing freshwater geodata and referenced from other views - `gis_rails_app/app/views/to_render/map/_map.html.erb`
+- Mapbox(v2.2.2) map showing freshwater geodata and referenced from other views - `gis_rails_app/app/views/to_render/map/_map.html.erb`
 - Application views locatated in: `gis_rails_app/app/views`
 	
-Frontent views get data directly from Rails controllers. Communication between Javascript of Mapbox and Rails controllers is provided by Gon gem.
+Frontend views get data directly from Rails controllers. Communication between Javascript of Mapbox and Rails controllers is provided by Gon gem. Mapbox frontend shows array of GeoJSON-s on the map. This arrray is created in controllers.
 
-# Backend
+Lakes, reservoirs and rivers are shown as Mapbox markers, ecoregions as geometry.
+
+## Backend
 Application backend retrieves geodata from database. Application has defined 4 models in `gis_rails_app/app/models`:
 - Country (all countries of the world)
 - Continent (continents of the world)
 - Freshwater (selected freshwater lakes, reservoirs and rivers)
 - FreshwaterEcoregion (426 freshwater ecoregions of the world according to WWF organisation)
-Models providemainly data preprocessing.
+
+Models provide mainly data preprocessing.
 
 Selection of data for views is implemented in controllers `freshwaters_controller.rb` and `freshwater_ecoregions_controller.rb`
+
 Data are selected using ActiveRecord. ST functions are executed by raw SQL queries.
 
 ## Database
-Application database is build on PostgreSQL (v9.3) with PostGIS extension (v2.2.2). 
+Application database is build on PostgreSQL (v9.3) with PostGIS extension (v2.2). 
 Schema is captured in `gis_rails_app/db/schema.rb`.
 
 Data seed into db is implemented in `gis_rails_app/db/seeds.rb`. Majority of ST functions are executed here because of performance.
