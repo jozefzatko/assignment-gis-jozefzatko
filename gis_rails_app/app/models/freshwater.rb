@@ -73,10 +73,7 @@ class Freshwater < ActiveRecord::Base
   
   def get_area
     if area_km2.nil?
-      record = ActiveRecord::Base.connection.execute("SELECT ST_Area(ST_Transform(coordinates, utmzone(ST_Centroid(coordinates)))) FROM freshwaters where id = " + id.to_s + ";")
-      counted_area_m2 = record[0].to_s.split("\"")[3].to_f
-      counted_area_km2 = counted_area_m2 / 1000000
-      @area = counted_area_km2.round(1).to_s
+      @area = "-"
     else
       @area = area_km2.to_s
     end

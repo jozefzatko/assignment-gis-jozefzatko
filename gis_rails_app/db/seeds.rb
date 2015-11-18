@@ -259,6 +259,8 @@ end
 #	end
 #end
 
+puts "Be patient..."
+
 connection.execute(" UPDATE freshwaters SET json_coordinates = replace(json_coordinates, '=>', ':'); ")
 connection.execute(" UPDATE freshwaters SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326); ")
 
