@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20151113223402) do
     t.float    "latitude"
     t.float    "elevation"
     t.text     "country"
+    t.integer  "country_id"
     t.text     "secondary_countries"
     t.text     "river"
     t.text     "near_city"
@@ -80,6 +81,7 @@ ActiveRecord::Schema.define(version: 20151113223402) do
   add_index "freshwaters", ["area_km2"], name: "index_freshwaters_on_area_km2", using: :btree
   add_index "freshwaters", ["coordinates"], name: "index_freshwaters_on_coordinates", using: :gist
   add_index "freshwaters", ["country"], name: "index_freshwaters_on_country", using: :btree
+  add_index "freshwaters", ["country_id"], name: "index_freshwaters_on_country_id", using: :btree
   add_index "freshwaters", ["freshwater_ecoregion_id"], name: "index_freshwaters_on_freshwater_ecoregion_id", using: :btree
   add_index "freshwaters", ["freshwater_type"], name: "index_freshwaters_on_freshwater_type", using: :btree
   add_index "freshwaters", ["name"], name: "index_freshwaters_on_name", using: :btree

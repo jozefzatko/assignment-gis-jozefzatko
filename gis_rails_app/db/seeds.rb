@@ -113,7 +113,7 @@ connection.execute(" UPDATE freshwater_ecoregions SET json_coordinates = replace
 connection.execute(" UPDATE freshwater_ecoregions SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326); ")
 
 for i in 1..count_of_freshwater_ecoregions 
-	record = connection.execute("SELECT ST_AsGeoJSON(ST_PointOnSurface(ST_MakeValid(coordinates))) FROM freshwater_ecoregions where id = " + i.to_s + ";")
+	record = connection.execute(" SELECT ST_AsGeoJSON(ST_PointOnSurface(ST_MakeValid(coordinates))) FROM freshwater_ecoregions where id = " + i.to_s + "; ")
 	point = JSON.parse(record[0]["st_asgeojson"])["coordinates"]
 	
 	longitude = point.split(",")[0][0]
@@ -133,6 +133,14 @@ count_of_freshwaters = 0
 
 data_hash['features'].each do |freshwtr|
 
+	country = freshwtr["properties"]["COUNTRY"]
+	record = connection.select_all(" SELECT id FROM countries WHERE name like \'%" + country + "%\';")
+	if record.empty?
+		country_id = ""
+	else
+		country_id = record[0].to_s.split("\"")[3]
+	end
+	
 	if freshwtr["geometry"].nil?
 		# json_coordinates is nil
 	else
@@ -146,7 +154,8 @@ data_hash['features'].each do |freshwtr|
 			longitude:						freshwtr["properties"]["LONG_DEG"],
 			latitude:							freshwtr["properties"]["LAT_DEG"],
 			elevation:						freshwtr["properties"]["ELEV_M"],
-			country:							freshwtr["properties"]["COUNTRY"],
+			country:							country,
+			country_id:						country_id,
 			secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
 			river:								freshwtr["properties"]["RIVER"],
 			near_city:						freshwtr["properties"]["NEAR_CITY"],
@@ -165,6 +174,19 @@ data_hash = JSON.parse(File.read(freshwater_file_2))
 
 data_hash['features'].each do |freshwtr|
 
+	country = freshwtr["properties"]["COUNTRY"]
+	
+	if country.nil?
+		country_id = ""
+	else
+		record = connection.select_all(" SELECT id FROM countries WHERE name like \'%" + country + "%\';")
+		if record.empty?
+			country_id = ""
+		else
+			country_id = record[0].to_s.split("\"")[3]
+		end
+	end
+
 	if freshwtr["geometry"].nil?
 		# json_coordinates is nil
 	else
@@ -178,7 +200,8 @@ data_hash['features'].each do |freshwtr|
 			longitude:						freshwtr["properties"]["LONG_DEG"],
 			latitude:							freshwtr["properties"]["LAT_DEG"],
 			elevation:						freshwtr["properties"]["ELEV_M"],
-			country:							freshwtr["properties"]["COUNTRY"],
+			country:							country,
+			country_id:						country_id,
 			secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
 			river:								freshwtr["properties"]["RIVER"],
 			near_city:						freshwtr["properties"]["NEAR_CITY"],
@@ -198,6 +221,14 @@ end
 
 #data_hash['features'].each do |freshwtr|
 
+#	country = freshwtr["properties"]["COUNTRY"]
+#	record = connection.execute(" SELECT id FROM countries WHERE name like \'%" + country + "%\';")
+#	if record.blank?
+#		country_id = ""
+#	else
+#		country_id = record[0].to_s.split("\"")[3]
+#	end
+
 #	if freshwtr["properties"]["TYPE"] == "Lake" or freshwtr["properties"]["TYPE"] == "Reservoir"
 		# lakes and reservoirs
 #	elsif freshwtr["geometry"].nil?
@@ -214,7 +245,8 @@ end
 #				longitude:						freshwtr["properties"]["LONG_DEG"],
 #				latitude:							freshwtr["properties"]["LAT_DEG"],
 #				elevation:						freshwtr["properties"]["ELEV_M"],
-#				country:							freshwtr["properties"]["COUNTRY"],
+#				country:							country,
+#				country_id:						country_id,
 #				secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
 #				river:								freshwtr["properties"]["RIVER"],
 #				near_city:						freshwtr["properties"]["NEAR_CITY"],

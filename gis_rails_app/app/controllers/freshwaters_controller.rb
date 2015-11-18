@@ -4,14 +4,14 @@ class FreshwatersController < ApplicationController
 
   def index
  	 
-    if params[:expression].to_s.strip == "" and params[:area_from].to_s == "" and params[:area_to].to_s == "" and (params[:country].to_s == "") and (params[:ecoregion].to_s == "" or params[:ecoregion].to_s == "[\"\"]")
+    if params[:expression].to_s.strip == "" and params[:area_from].to_s == "" and params[:area_to].to_s == "" and (params[:country].to_s == "" or params[:country].to_s == "[\"\"]") and (params[:ecoregion].to_s == "" or params[:ecoregion].to_s == "[\"\"]")
       @@freshwaters = Freshwater.where("id <= ?",250)
     else
       @@freshwaters = Freshwater.where("name ilike ?", "%" + params[:expression].to_s + "%")
       @@freshwaters = @@freshwaters.where("area_km2 >= #{params[:area_from]}") unless params[:area_from].to_s == ""
       @@freshwaters = @@freshwaters.where("area_km2 <= #{params[:area_to]}") unless params[:area_to].to_s == ""
-      @@freshwaters = @@freshwaters.where("country = ?", params[:country].to_s.gsub!(/[^0-9A-Za-z\ ]/, '').to_s)
-      @@freshwaters = @@freshwaters.where("freshwater_ecoregion_id = ?", params[:ecoregion])
+      @@freshwaters = @@freshwaters.where("country_id = ?", params[:country]) unless params[:country].to_s == "[\"\"]"
+      @@freshwaters = @@freshwaters.where("freshwater_ecoregion_id = ?", params[:ecoregion]) unless params[:ecoregion].to_s == "[\"\"]"
   
       @lakes = @@freshwaters.where("freshwater_type = ?", "Lake")
       @reservoirs = @@freshwaters.where("freshwater_type = ?", "Reservoir")

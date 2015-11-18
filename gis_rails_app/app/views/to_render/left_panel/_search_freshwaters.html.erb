@@ -27,7 +27,7 @@
 					</div>
 
 					<div class="search-left-3">
-						<%= collection_select( :country, nil, Country.order('name'), :name, :name, {prompt: 'All countries of the world'}, {:class=>'select'}) %>
+						<%= collection_select( :country, nil, Country.order('name'), :id, :name, {prompt: 'All countries of the world'}, {:class=>'select'}) %>
 					</div>
 
 					<div class="search-left-4">
