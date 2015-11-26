@@ -69,7 +69,6 @@ end
 
 data_hash = JSON.parse(File.read(feow_hydrosheds_file))
 i = 0
-count_of_freshwater_ecoregions = 0
 
 data_hash['features'].each do |ecoregion|
 		
@@ -106,22 +105,48 @@ data_hash['features'].each do |ecoregion|
 	)
 	
 	i += 5
-	count_of_freshwater_ecoregions += 1
 end
 
 connection.execute(" UPDATE freshwater_ecoregions SET json_coordinates = replace(json_coordinates, '=>', ':'); ")
 connection.execute(" UPDATE freshwater_ecoregions SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326); ")
 
-for i in 1..count_of_freshwater_ecoregions 
-	record = connection.execute(" SELECT ST_AsGeoJSON(ST_PointOnSurface(ST_MakeValid(coordinates))) FROM freshwater_ecoregions where id = " + i.to_s + "; ")
-	point = JSON.parse(record[0]["st_asgeojson"])["coordinates"]
-	
-	longitude = point.split(",")[0][0]
-	latitude = point.split(",")[0][1]
-	
-	connection.execute(" UPDATE freshwater_ecoregions SET longitude= " + longitude.to_s + " where id = " + i.to_s + "; ")
-	connection.execute(" UPDATE freshwater_ecoregions SET latitude = " + latitude.to_s  + " where id = " + i.to_s + "; ")
-end
+
+# set longitude for ecoregions
+connection.execute("
+  UPDATE freshwater_ecoregions ecoregions
+  SET longitude = (
+	WITH longitudes as (
+    SELECT * from (
+      WITH point as (
+        SELECT id, ST_PointOnSurface(ST_MakeValid(coordinates)) FROM freshwater_ecoregions
+      )
+    SELECT point.id, st_x(st_pointonsurface) FROM point
+    ) as b
+  )
+  SELECT st_x
+  FROM  longitudes
+  WHERE ecoregions.id = longitudes.id
+  )
+")
+
+# set latitude for ecoregions
+connection.execute("
+  UPDATE freshwater_ecoregions ecoregions
+  SET latitude = (
+    WITH latitudes as (
+    SELECT * from (
+      WITH point as (
+        SELECT id, ST_PointOnSurface(ST_MakeValid(coordinates)) from freshwater_ecoregions
+      )
+    SELECT point.id, st_y(st_pointonsurface) from point
+    ) as b
+  )
+  SELECT st_y
+  FROM  latitudes
+  WHERE ecoregions.id = latitudes.id
+  )
+")
+
 
 ### Freshwater no. 1 #########################################################################################
 
@@ -129,21 +154,8 @@ puts "Still seeding..."
 
 data_hash = JSON.parse(File.read(freshwater_file_1))
 
-count_of_freshwaters = 0
-
 data_hash['features'].each do |freshwtr|
 
-	country = freshwtr["properties"]["COUNTRY"]
-	record = connection.select_all(" SELECT id FROM countries WHERE name like \'%" + country + "%\';")
-	if record.empty?
-		country_id = ""
-	else
-		country_id = record[0].to_s.split("\"")[3]
-	end
-	
-	if freshwtr["geometry"].nil?
-		# json_coordinates is nil
-	else
 		Freshwater.create(
 
 			feow_id: 							freshwtr["properties"]["FEOW_ID"],
@@ -154,8 +166,7 @@ data_hash['features'].each do |freshwtr|
 			longitude:						freshwtr["properties"]["LONG_DEG"],
 			latitude:							freshwtr["properties"]["LAT_DEG"],
 			elevation:						freshwtr["properties"]["ELEV_M"],
-			country:							country,
-			country_id:						country_id,
+			country:							freshwtr["properties"]["COUNTRY"],
 			secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
 			river:								freshwtr["properties"]["RIVER"],
 			near_city:						freshwtr["properties"]["NEAR_CITY"],
@@ -163,9 +174,7 @@ data_hash['features'].each do |freshwtr|
 			json_coordinates:			freshwtr["geometry"].to_s
 
 			)
-		
-		count_of_freshwaters += 1
-	end
+
 end
 
 ### Freshwater no. 2 #########################################################################################
@@ -174,22 +183,6 @@ data_hash = JSON.parse(File.read(freshwater_file_2))
 
 data_hash['features'].each do |freshwtr|
 
-	country = freshwtr["properties"]["COUNTRY"]
-	
-	if country.nil?
-		country_id = ""
-	else
-		record = connection.select_all(" SELECT id FROM countries WHERE name like \'%" + country + "%\';")
-		if record.empty?
-			country_id = ""
-		else
-			country_id = record[0].to_s.split("\"")[3]
-		end
-	end
-
-	if freshwtr["geometry"].nil?
-		# json_coordinates is nil
-	else
 		Freshwater.create(
 
 			feow_id: 							freshwtr["properties"]["FEOW_ID"],
@@ -200,8 +193,7 @@ data_hash['features'].each do |freshwtr|
 			longitude:						freshwtr["properties"]["LONG_DEG"],
 			latitude:							freshwtr["properties"]["LAT_DEG"],
 			elevation:						freshwtr["properties"]["ELEV_M"],
-			country:							country,
-			country_id:						country_id,
+			country:							freshwtr["properties"]["COUNTRY"],
 			secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
 			river:								freshwtr["properties"]["RIVER"],
 			near_city:						freshwtr["properties"]["NEAR_CITY"],
@@ -209,80 +201,62 @@ data_hash['features'].each do |freshwtr|
 			json_coordinates:			freshwtr["geometry"].to_s
 
 			)
-		
-		count_of_freshwaters += 1
-	end
-	
+
 end
 
 ### Freshwater no. 3 #########################################################################################
 
-#data_hash = JSON.parse(File.read(freshwater_file_3))
+data_hash = JSON.parse(File.read(freshwater_file_3))
 
-#data_hash['features'].each do |freshwtr|
-
-#	country = freshwtr["properties"]["COUNTRY"]
-#	record = connection.execute(" SELECT id FROM countries WHERE name like \'%" + country + "%\';")
-#	if record.blank?
-#		country_id = ""
-#	else
-#		country_id = record[0].to_s.split("\"")[3]
-#	end
-
-#	if freshwtr["properties"]["TYPE"] == "Lake" or freshwtr["properties"]["TYPE"] == "Reservoir"
-		# lakes and reservoirs
-#	elsif freshwtr["geometry"].nil?
-		# json_coordinates is nil
-#	else
+data_hash['features'].each do |freshwtr|
 		
-#		Freshwater.create(
+		Freshwater.create(
 
-#				feow_id: 							freshwtr["properties"]["FEOW_ID"],
-#				name: 								freshwtr["properties"]["LAKE_NAME"],
-#				freshwater_type:			freshwtr["properties"]["TYPE"],
-#				area_km2:							freshwtr["properties"]["AREA_SKM"],
-#				perimeter_km:					freshwtr["properties"]["PERIM_KM"],
-#				longitude:						freshwtr["properties"]["LONG_DEG"],
-#				latitude:							freshwtr["properties"]["LAT_DEG"],
-#				elevation:						freshwtr["properties"]["ELEV_M"],
-#				country:							country,
-#				country_id:						country_id,
-#				secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
-#				river:								freshwtr["properties"]["RIVER"],
-#				near_city:						freshwtr["properties"]["NEAR_CITY"],
+				feow_id: 							freshwtr["properties"]["FEOW_ID"],
+				name: 								freshwtr["properties"]["LAKE_NAME"],
+				freshwater_type:			freshwtr["properties"]["TYPE"],
+				area_km2:							freshwtr["properties"]["AREA_SKM"],
+				perimeter_km:					freshwtr["properties"]["PERIM_KM"],
+				longitude:						freshwtr["properties"]["LONG_DEG"],
+				latitude:							freshwtr["properties"]["LAT_DEG"],
+				elevation:						freshwtr["properties"]["ELEV_M"],
+				country:							freshwtr["properties"]["COUNTRY"],
+				secondary_countries:	freshwtr["properties"]["SEC_CNTRY"],
+				river:								freshwtr["properties"]["RIVER"],
+				near_city:						freshwtr["properties"]["NEAR_CITY"],
 
-#				json_coordinates:			freshwtr["geometry"].to_s
+				json_coordinates:			freshwtr["geometry"].to_s
 
-#				)
-		
-#		count_of_freshwaters += 1
-#	end
-#end
+				)
+
+end
 
 puts "Be patient..."
 
 connection.execute(" UPDATE freshwaters SET json_coordinates = replace(json_coordinates, '=>', ':'); ")
-connection.execute(" UPDATE freshwaters SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326); ")
+connection.execute(" UPDATE freshwaters SET coordinates=ST_SetSRID(st_geomfromgeojson(json_coordinates),4326) WHERE json_coordinates is not null AND json_coordinates <> ''; ")
 
-ecoregions_geometry = Array.new
+connection.execute(" UPDATE freshwaters SET country = 'United States of America' WHERE country = 'United States' OR country = 'USA'; ") 
 
-for i in 1..count_of_freshwater_ecoregions
-	record = connection.execute(" SELECT coordinates FROM freshwater_ecoregions WHERE id = " + i.to_s + " ;" )
-	ecoregions_geometry[i] = record[0].to_s.split("\"")[3]
-end
+# freshwater - country connection
+connection.execute(" 
+	UPDATE freshwaters fr
+	SET country_id = (
+		SELECT c.id FROM countries as c JOIN freshwaters as f on c.name like ('%' || f.country || '%')
+		WHERE fr.id = f.id
+		LIMIT 1
+	)
+") 
 
-for i in 1..count_of_freshwaters
-	record = connection.execute(" SELECT longitude, latitude FROM freshwaters WHERE id = " + i.to_s + ";" )
-	longitude = record[0].to_s.split("\"")[3]
-	latitude = record[0].to_s.split("\"")[7]
-
-	for j in 1..count_of_freshwater_ecoregions
-		record = connection.execute(" SELECT ST_Contains(coordinates, ST_SetSRID(ST_Point(" + longitude + "," + latitude + "),4326)) FROM freshwater_ecoregions WHERE id = "+ j.to_s + ";" )
-		if record[0] == {"st_contains"=>"t"}
-			connection.execute(" UPDATE freshwaters SET freshwater_ecoregion_id = " + j.to_s + " WHERE id = " + i.to_s + "; ")
-		end
-	end
-end
+# freshwater - ecoregion connection
+connection.execute("
+	UPDATE freshwaters fr
+	SET freshwater_ecoregion_id = (
+		SELECT fe.id FROM freshwaters as f
+		JOIN freshwater_ecoregions as fe on ST_Contains(fe.coordinates, ST_SetSRID(ST_Point(f.longitude,f.latitude),4326)) = 't'
+		WHERE fr.id = f.id
+	)
+")
 
 puts "Seeding complete."
 
