@@ -29,7 +29,9 @@ class Freshwater < ActiveRecord::Base
     @tooltip += "<b>GPS:</b> "              + get_gps.to_s                              + "<br>"
     
     # todo: make this dynamic
-    @tooltip += "<a href=\"http://localhost:3000/freshwaters/" + id.to_s + "\">Target this " + get_type.to_s.downcase +  "</a>"
+    @tooltip += "<a href=\"http://localhost:3000/freshwaters/" + id.to_s + "\">Target this " + get_type.to_s.downcase + "</a>"
+    @tooltip +=" | "
+    @tooltip += "<a href=\"http://localhost:3000/freshwaters/" + id.to_s + "/near\">Show near   " + get_type.to_s.downcase + "s" + "</a>"
   end
   
   
@@ -184,6 +186,30 @@ class Freshwater < ActiveRecord::Base
         "coordinates": geometry["coordinates"],
       }
     }
+  end
+  
+  
+  def get_near(perimeter)
+    
+    sql = " SELECT 	f2.id, f2.feow_id, f2.freshwater_ecoregion_id, f2.name, f2.freshwater_type,
+              f2.area_km2, f2.perimeter_km, f2.longitude, f2.latitude, f2.elevation,
+              f2.country, f2.country_id, f2.secondary_countries, f2.river, f2.near_city,
+              f2.coordinates, f2.json_coordinates, f2.created_at, f2.updated_at
+            FROM freshwaters f1
+            JOIN freshwaters f2 ON
+            ST_Distance(f1.coordinates,f2.coordinates) < " + perimeter.to_s + "
+            WHERE f1.id = " + id.to_s + " AND f2.name <> ''  "
+    
+    result = ActiveRecord::Base.connection.execute(sql)
+    
+    fields = result.fields
+    models = result.values.map { 
+      |value_set| 
+      Freshwater.instantiate(Hash[fields.zip(value_set)])
+    }
+    
+    @freshwater = models
+    
   end
   
 end

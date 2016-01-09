@@ -58,8 +58,6 @@ class FreshwatersController < ApplicationController
     @geojson_data = Array.new
 		
     @freshwaters = @@freshwaters
-
-    puts @freshwaters.size
     
     @freshwaters.each do |freshwater|
 			
@@ -76,6 +74,35 @@ class FreshwatersController < ApplicationController
     gon.zoom_level = @freshwater.get_zoom_level
     gon.coordinates = @freshwater.get_coordinates
     
+  end
+
+
+  def near
+  
+    #todo: make this dynamic
+    @freshwater = Freshwater.find(request.original_url.split('/')[4]) 
+    
+    @freshwaters = Array.new
+    @geojson_data = Array.new
+		
+    @freshwaters = @freshwater.get_near(2)
+    @@freshwaters = @freshwaters
+    
+    @freshwaters.each do |freshwater|
+			
+      if freshwater.id == @freshwater.id
+        @geojson_data << freshwater.get_mapbox_point_geojson("large")
+      else
+        @geojson_data << freshwater.get_mapbox_point_geojson("small")
+      end
+		end
+  
+    gon.geo_data = @geojson_data
+    gon.longitude = @freshwater.longitude
+    gon.latitude = @freshwater.latitude
+    gon.zoom_level = @freshwater.get_zoom_level - 2
+    gon.coordinates = @freshwater.get_coordinates
+
   end
 
 end
