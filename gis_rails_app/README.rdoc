@@ -1,4 +1,4 @@
-== README
+== Ruby on Rails map-based application
 
 Author: Jozef Zatko, FIIT STU
 
@@ -8,7 +8,7 @@ Created for non-commercial use
 
 Requirements:
 
-* Ruby v2.2.1
+* Ruby v2.2.2
 * Rails v4.2.4
 * Postgres v9.3
 * Postgis v2.2
